@@ -14,7 +14,7 @@ export default function Archive() {
   return (
     <section>
       {archived?.length ? (
-        archived?.map((habit) => <HabitCard key={key.id} habit={habit} />)
+        archived?.map((habit) => <HabitCard key={habit.id} habit={habit} />)
       ) : (
         <p>No archived habits!</p>
       )}
