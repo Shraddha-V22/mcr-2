@@ -10,16 +10,16 @@ import { useAddModal } from "../contexts/AddHabitProvider";
 
 export default function HabitCard({ newHabit, habit }) {
   const { habitsDispatch } = useHabits();
-  const [openEditModal, setOpenEditModal] = useState(false);
   const { addHabit, openModal } = useAddModal();
 
   const actionHandler = (e, func) => {
     e.stopPropagation();
     func;
   };
+
   return (
     <section
-      onClick={() => (newHabit ? openModal() : setOpenEditModal(true))}
+      onClick={() => openModal()}
       className="flex h-[100px] w-[200px] flex-col justify-between rounded-md border border-black p-4"
     >
       <h3 className="capitalize">
@@ -57,10 +57,6 @@ export default function HabitCard({ newHabit, habit }) {
             <FontAwesomeIcon icon={faTrash} title="Delete" />
           </button>
         </div>
-      )}
-      {addHabit && <AddHabitModal />}
-      {openEditModal && (
-        <AddHabitModal edit habit={habit} setOpenModal={setOpenEditModal} />
       )}
     </section>
   );

@@ -6,7 +6,7 @@ import { HABITS } from "../reducerTypes";
 import { formatDate } from "../utils/formatDate";
 import { useEffect } from "react";
 
-export default function AddHabitModal({ edit, habit, setOpenModal }) {
+export default function AddHabitModal({ edit, habit }) {
   const { closeModal } = useAddModal();
   const { habitsDispatch } = useHabits();
   const [habitInput, setHabitInput] = useState({
@@ -22,9 +22,9 @@ export default function AddHabitModal({ edit, habit, setOpenModal }) {
     setHabitInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    edit && setHabitInput(habit);
-  }, [edit]);
+  // useEffect(() => {
+  //   edit && setHabitInput(habit);
+  // }, [edit]);
 
   return (
     <section className="fixed left-0 right-0 top-0 z-10 grid h-[100vh] w-[100vw] place-items-center bg-black/20">
@@ -97,56 +97,29 @@ export default function AddHabitModal({ edit, habit, setOpenModal }) {
             </section>
           </section>
           <div className="flex gap-4 self-end">
-            {!edit ? (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  habitsDispatch({
-                    type: HABITS.ADD_HABIT,
-                    payload: habitInput,
-                  });
-                  closeModal();
-                }}
-                className="rounded-md border px-2 py-1"
-              >
-                Save
-              </button>
-            ) : (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  habitsDispatch({
-                    type: HABITS.EDIT_HABIT,
-                    payload: habitInput,
-                  });
-                  setOpenModal(false);
-                }}
-                className="rounded-md border px-2 py-1"
-              >
-                Save
-              </button>
-            )}
-            {edit ? (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenModal(false);
-                }}
-                className="rounded-md border px-2 py-1"
-              >
-                Cancel
-              </button>
-            ) : (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  closeModal();
-                }}
-                className="rounded-md border px-2 py-1"
-              >
-                Cancel
-              </button>
-            )}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                habitsDispatch({
+                  type: HABITS.ADD_HABIT,
+                  payload: habitInput,
+                });
+                closeModal();
+              }}
+              className="rounded-md border px-2 py-1"
+            >
+              Save
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                closeModal();
+              }}
+              className="rounded-md border px-2 py-1"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </section>
