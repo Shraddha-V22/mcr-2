@@ -1,7 +1,21 @@
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Archive from "./pages/Archive";
+import Header from "./components/Header";
+import { useState } from "react";
+import AddHabitModal from "./components/AddHabitModal";
+import { useAddModal } from "./contexts/AddHabitProvider";
+
 function App() {
+  const { addHabit } = useAddModal();
   return (
-    <div className="ml-4 flex h-24 border-2 border-gray-300 p-3 text-gray-700 underline shadow-md">
-      Tailwind setup
+    <div className="relative">
+      <Header />
+      {addHabit && <AddHabitModal />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/archive" element={<Archive />} />
+      </Routes>
     </div>
   );
 }
