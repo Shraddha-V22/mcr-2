@@ -119,7 +119,7 @@ export default function AddHabitModal({ edit, habit, setOpenModal }) {
                     type: HABITS.EDIT_HABIT,
                     payload: habitInput,
                   });
-                  setOpenModal("close");
+                  setOpenModal(false);
                 }}
                 className="rounded-md border px-2 py-1"
               >
@@ -130,7 +130,7 @@ export default function AddHabitModal({ edit, habit, setOpenModal }) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setOpenModal("close");
+                  setOpenModal(false);
                 }}
                 className="rounded-md border px-2 py-1"
               >

@@ -1,4 +1,3 @@
-import { useAddModal } from "../contexts/AddHabitProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -7,19 +6,20 @@ import { useHabits } from "../contexts/HabitsProvider";
 import { HABITS } from "../reducerTypes";
 import { useState } from "react";
 import AddHabitModal from "./AddHabitModal";
+import { useAddModal } from "../contexts/AddHabitProvider";
 
 export default function HabitCard({ newHabit, habit }) {
   const { habitsDispatch } = useHabits();
-  const [openModal, setOpenModal] = useState("close");
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const { addHabit, openModal } = useAddModal();
 
   const actionHandler = (e, func) => {
     e.stopPropagation();
     func;
   };
-
   return (
     <section
-      onClick={() => (newHabit ? setOpenModal("add") : setOpenModal("edit"))}
+      onClick={() => (newHabit ? openModal() : setOpenEditModal(true))}
       className="flex h-[100px] w-[200px] flex-col justify-between rounded-md border border-black p-4"
     >
       <h3 className="capitalize">
@@ -27,7 +27,7 @@ export default function HabitCard({ newHabit, habit }) {
       </h3>
       {!newHabit && (
         <div className="flex gap-4 self-end">
-          <button onClick={(e) => actionHandler(e, openEditModal())}>
+          <button onClick={(e) => actionHandler(e, setOpenEditModal(true))}>
             <FontAwesomeIcon icon={faPen} title="Edit" />
           </button>
           <button
@@ -58,11 +58,10 @@ export default function HabitCard({ newHabit, habit }) {
           </button>
         </div>
       )}
-      {openModal === "add" ? (
-        <AddHabitModal />
-      ) : openModal === "edit" ? (
-        <AddHabitModal edit habit={habit} setOpenModal={setOpenModal} />
-      ) : null}
+      {addHabit && <AddHabitModal />}
+      {openEditModal && (
+        <AddHabitModal edit habit={habit} setOpenModal={setOpenEditModal} />
+      )}
     </section>
   );
 }
